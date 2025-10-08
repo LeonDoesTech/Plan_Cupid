@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plan Cupid</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+     
+      .small-logo {
+    width: 20px !important;
+    height: 20px !important;
+    vertical-align: middle;
+    margin: 0 4px;
+    border-radius: 50%;
+    object-fit: cover;
+    opacity: 0.9;
+  }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, #f8ecff, #c6a1ff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #3d0066;
+      overflow: hidden;
+      padding: 1rem;
+      position: relative;
+    }
+
+    /* Decorative glowing circles */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.3;
+      animation: moveCircle 20s linear infinite;
+      z-index: -1;
+    }
+
+    .circle1 {
+      width: 400px;
+      height: 400px;
+      background: #b388ff;
+      top: -100px;
+      left: -100px;
+    }
+
+    .circle2 {
+      width: 500px;
+      height: 500px;
+      background: #f4b8ff;
+      bottom: -150px;
+      right: -150px;
+      animation-delay: 5s;
+    }
+
+    @keyframes moveCircle {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(40px, -40px); }
+    }
+
+    /* Vignette for elegance */
+    body::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, transparent 60%, rgba(0, 0, 0, 0.05));
+      z-index: -1;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      animation: fadeInDown 1.2s ease, floatTitle 4s ease-in-out infinite;
+      letter-spacing: 1px;
+    }
+
+    p.tagline {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: #5f3dc4;
+      margin-bottom: 2.5rem;
+      animation: fadeIn 1.5s ease;
+      max-width: 600px;
+    }
+
+    .btn {
+      background-color:#9b5de5;
+      color: rgb(255, 255, 255);
+      padding: 0.9rem 2.8rem;
+      border: none;
+      border-radius: 50px;
+      font-size: clamp(1rem, 2.5vw, 1.1rem);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(155, 93, 229, 0.4);
+      animation: fadeInUp 1.8s ease;
+    }
+
+    .btn:hover {
+      background-color: #7a42c4;
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(122, 66, 196, 0.5);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: clamp(0.8rem, 2vw, 1rem);
+      color: #5f3dc4;
+      animation: fadeIn 2s ease;
+      text-align: center;
+      padding: 0 1rem;
+      width: 100%;
+    }
+
+    /* Floating heart background */
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .heart {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: rgba(255, 182, 193, 0.5);
+      transform: rotate(45deg);
+      animation: float 6s infinite ease-in;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: rgba(255, 182, 193, 0.5);
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -9px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 9px;
+      top: 0;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(45deg); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-800px) rotate(45deg); opacity: 0; }
+    }
+
+    @keyframes floatTitle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 600px) {
+      footer {
+        bottom: 10px;
+      }
+      .btn {
+        padding: 0.8rem 2rem;
+      }
+      .circle1, .circle2 {
+        opacity: 0.2;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="circle circle1"></div>
+  <div class="circle circle2"></div>
+  <div class="hearts" id="hearts"></div>
+
+  <h1>♡Plan Cupid♡</h1>
+  <p class="tagline">Plan your perfect moments with love, thoughtfulness, and style.</p>
+  <button class="btn" onclick="window.location.href='main.html'">Get Started</button>
+
+  <footer>
+  <img src="Logo.jpg" alt="Plan Cupid Logo" class="small-logo">
+  Made by <strong>Leon Mendoza</strong> with ClaudeAI
+  <img src="claude.png" alt="Plan Cupid Logo" class="small-logo">
+</footer>
+
+
+  <script>
+    const heartsContainer = document.getElementById('hearts');
+    for (let i = 0; i < 15; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (4 + Math.random() * 3) + 's';
+      heart.style.width = heart.style.height = 10 + Math.random() * 15 + 'px';
+      heartsContainer.appendChild(heart);
+    }
+  </script>
+</body>
+</html>

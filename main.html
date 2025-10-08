@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Planner - Plan Your Perfect Date</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="Logo.jpg">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img src="LogoTR.png" alt="Logo" class="logo">
+        </header>
+
+        <form class="date-form" id="datePlannerForm">
+            <!-- Date and Time Section -->
+            <div class="form-section">
+                <h2><i class="fas fa-calendar-alt"></i> Date & Time</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dateInput">Date</label>
+                        <input type="date" id="dateInput" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="timeStartInput">Start Time</label>
+                        <input type="time" id="timeStartInput" name="timeStart" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="timeEndInput">End Time</label>
+                        <input type="time" id="timeEndInput" name="timeEnd" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location Section -->
+            <div class="form-section">
+                <h2><i class="fas fa-map-marker-alt"></i> Location</h2>
+                <div class="form-group">
+                    <label for="placeInput">Place</label>
+                    <input type="text" id="placeInput" name="place" placeholder="Enter the location for your date" required>
+                </div>
+            </div>
+
+            <!-- Transportation Section -->
+            <div class="form-section">
+                <h2><i class="fas fa-car"></i> Transportation</h2>
+                <div class="form-group">
+                    <label for="transportType">Pick up or Meet up</label>
+                    <select id="transportType" name="transportType" required onchange="toggleTransportDetails()">
+                        <option value="">Choose option</option>
+                        <option value="pickup">Pick up</option>
+                        <option value="meetup">Meet up</option>
+                    </select>
+                </div>
+                <div class="form-group" id="pickupDetails" style="display: none;">
+                    <label for="pickupLocation">Pickup Details</label>
+                    <input type="text" id="pickupLocation" name="pickupLocation" placeholder="Where should I pick you up? (address, landmark, etc.)">
+                </div>
+                <div class="form-group" id="meetupDetails" style="display: none;">
+                    <label for="meetupLocation">Meetup Details</label>
+                    <input type="text" id="meetupLocation" name="meetupLocation" placeholder="Where should we meet? (specific location, entrance, etc.)">
+                </div>
+            </div>
+
+            <!-- Personal Details Section -->
+            <div class="form-section">
+                <h2><i class="fas fa-user-heart"></i> Personal Details</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fromPerson">From (Your Name)</label>
+                        <input type="text" id="fromPerson" name="fromPerson" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="toPerson">To (Their Name)</label>
+                        <input type="text" id="toPerson" name="toPerson" placeholder="Their name" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Date Details Section -->
+            <div class="form-section">
+                <h2><i class="fas fa-heart"></i> Date Details</h2>
+                <div class="form-group">
+                    <label for="whatToDo">What to Do</label>
+                    <textarea id="whatToDo" name="whatToDo" placeholder="Describe the activities planned for the date" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="purpose">Purpose</label>
+                    <select id="purpose" name="purpose" required onchange="toggleCustomPurpose()">
+                        <option value="">Choose purpose</option>
+                        <option value="first-date">First Date</option>
+                        <option value="anniversary">Anniversary</option>
+                        <option value="birthday">Birthday</option>
+                        <option value="casual">Casual Date</option>
+                        <option value="romantic">Romantic Date</option>
+                        <option value="special-occasion">Special Occasion</option>
+                        <option value="custom">Custom (Write your own)</option>
+                    </select>
+                </div>
+                <div class="form-group" id="customPurposeGroup" style="display: none;">
+                    <label for="customPurpose">Custom Purpose</label>
+                    <input type="text" id="customPurpose" name="customPurpose" placeholder="Write your custom purpose for this date">
+                </div>
+            </div>
+
+            <!-- Style & Preparation Section -->
+            <div class="form-section">
+                <h2><i class="fas fa-tshirt"></i> Style & Preparation</h2>
+                <div class="form-group">
+                    <label for="whatToWear">What to Wear</label>
+                    <input type="text" id="whatToWear" name="whatToWear" placeholder="Dress code or outfit suggestions" required>
+                </div>
+                <div class="form-group">
+                    <label for="thingsToBring">Things to Bring</label>
+                    <textarea id="thingsToBring" name="thingsToBring" placeholder="List items to bring (e.g., umbrella, wallet, tickets)" rows="2"></textarea>
+                </div>
+            </div>
+
+            <!-- Additional Notes -->
+            <div class="form-section">
+                <h2><i class="fas fa-sticky-note"></i> Additional Notes</h2>
+                <div class="form-group">
+                    <label for="additionalNotes">Extra Details</label>
+                    <textarea id="additionalNotes" name="additionalNotes" placeholder="Any other important information or special requests" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-magic"></i> Create Date Letter
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Form submission
+        document.getElementById('datePlannerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Collect form data
+            const formData = new FormData(this);
+            const dateData = {};
+            
+            for (let [key, value] of formData.entries()) {
+                dateData[key] = value;
+            }
+            
+            // Store data in localStorage for the letter page
+            localStorage.setItem('dateData', JSON.stringify(dateData));
+            
+            // Redirect to letter customization page
+            window.location.href = 'letter.html';
+        });
+
+        // Toggle transport details based on selection
+        function toggleTransportDetails() {
+            const transportType = document.getElementById('transportType').value;
+            const pickupDetails = document.getElementById('pickupDetails');
+            const meetupDetails = document.getElementById('meetupDetails');
+            const pickupLocation = document.getElementById('pickupLocation');
+            const meetupLocation = document.getElementById('meetupLocation');
+            
+            // Hide both initially
+            pickupDetails.style.display = 'none';
+            meetupDetails.style.display = 'none';
+            pickupLocation.required = false;
+            meetupLocation.required = false;
+            
+            // Show relevant section
+            if (transportType === 'pickup') {
+                pickupDetails.style.display = 'block';
+                pickupLocation.required = true;
+            } else if (transportType === 'meetup') {
+                meetupDetails.style.display = 'block';
+                meetupLocation.required = true;
+            }
+        }
+
+        // Toggle custom purpose input
+        function toggleCustomPurpose() {
+            const purpose = document.getElementById('purpose').value;
+            const customPurposeGroup = document.getElementById('customPurposeGroup');
+            const customPurpose = document.getElementById('customPurpose');
+            
+            if (purpose === 'custom') {
+                customPurposeGroup.style.display = 'block';
+                customPurpose.required = true;
+            } else {
+                customPurposeGroup.style.display = 'none';
+                customPurpose.required = false;
+            }
+        }
+
+        // Set minimum date to today
+        document.getElementById('dateInput').min = new Date().toISOString().split('T')[0];
+    </script>
+</body>
+</html>
